@@ -1,16 +1,16 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator'
 
 export class CreateDataDTO {
-  @IsDate()
-  timestamp: Date;
+    @IsDate()
+    timestamp: Date
 
-  @IsNumber()
-  lat: number;
+    @IsNumber()
+    lat: number
 
-  @IsNumber()
-  lng: number;
+    @IsNumber()
+    lng: number
 
-  @IsOptional()
-  @IsString()
-  specimenName?: string;
+    @IsOptional()
+    @IsString()
+    specimenName?: string
 }

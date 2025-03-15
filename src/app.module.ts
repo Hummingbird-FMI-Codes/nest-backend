@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { DataModule } from './data/data.module';
-import { WarningModule } from './warning/warning.module';
+import { Module } from '@nestjs/common'
+import { DataModule } from './data/data.module'
+import { AnomalyModule } from './anomaly/anomaly.module'
 
 @Module({
-  imports: [DataModule, WarningModule],
+    imports: [DataModule, AnomalyModule]
 })
 export class AppModule {}
