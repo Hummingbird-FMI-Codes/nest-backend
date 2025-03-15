@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Data {
+  id Int @id @default(autoincrement())
+
+  lat       Float
+  lng       Float
+  timestamp DateTime
+
+  specimen   Specimen? @relation(fields: [specimenId], references: [id])
+  specimenId Int?
+
+  createdAt DateTime @default(now())
+}
+
+model Specimen {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  data Data[]
+}
+
+model Warning {
+  id      Int         @id @default(autoincrement())
+  type    WarningType
+  message String
+
+  createdAt DateTime @default(now())
+}
+
+enum WarningType {
+  DANGER
+  WARNING
+  INFO
+}
