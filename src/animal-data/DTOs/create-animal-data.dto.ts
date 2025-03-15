@@ -1,6 +1,6 @@
 import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator'
 
-export class CreateDataDTO {
+export class CreateAnimalDataDTO {
     @IsDate()
     timestamp: Date
 

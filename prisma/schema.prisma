@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Data {
+model AnimalData {
   id Int @id @default(autoincrement())
 
   lat       Float
@@ -31,7 +31,7 @@ model Specimen {
 
   name String
 
-  data Data[]
+  animalData AnimalData[]
 }
 
 model Warning {

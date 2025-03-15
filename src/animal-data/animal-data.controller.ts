@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common'
-import { DataService } from './data.service'
-import { CreateDataDTO } from './DTOs/create-data.dto'
+import { AnimalDataService } from './animal-data.service'
+import { CreateAnimalDataDTO } from './DTOs/create-animal-data.dto'
 
-@Controller('data')
-export class DataController {
-    constructor(private readonly dataService: DataService) {}
+@Controller('animal-data')
+export class AnimalDataController {
+    constructor(private readonly dataService: AnimalDataService) {}
 
     @Post()
-    create(@Body() createDataDTO: CreateDataDTO) {
+    create(@Body() createDataDTO: CreateAnimalDataDTO) {
         return this.dataService.create(createDataDTO)
     }
 

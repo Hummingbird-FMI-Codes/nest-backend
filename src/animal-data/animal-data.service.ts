@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
-import { CreateDataDTO } from './DTOs/create-data.dto'
+import { CreateAnimalDataDTO } from './DTOs/create-animal-data.dto'
 import { PrismaService } from 'src/prisma/prisma.service'
 
 @Injectable()
-export class DataService {
+export class AnimalDataService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    async create(createDataDTO: CreateDataDTO) {
+    async create(createDataDTO: CreateAnimalDataDTO) {
         const { specimenName, ...rest } = createDataDTO
 
         if (specimenName) {
@@ -18,7 +18,7 @@ export class DataService {
                 })
 
             if (!existingSpecimen) {
-                return this.prismaService.data.create({
+                return this.prismaService.animalData.create({
                     data: {
                         ...rest,
                         specimen: {
@@ -31,7 +31,7 @@ export class DataService {
                 })
             }
 
-            return this.prismaService.data.create({
+            return this.prismaService.animalData.create({
                 data: {
                     ...rest,
                     specimen: {
@@ -44,20 +44,20 @@ export class DataService {
             })
         }
 
-        return this.prismaService.data.create({
+        return this.prismaService.animalData.create({
             data: rest,
             include: { specimen: true }
         })
     }
 
     findAll() {
-        return this.prismaService.data.findMany({
+        return this.prismaService.animalData.findMany({
             include: { specimen: true }
         })
     }
 
     findRange(startData: Date, endData: Date) {
-        return this.prismaService.data.findMany({
+        return this.prismaService.animalData.findMany({
             where: {
                 timestamp: {
                     gte: startData,
