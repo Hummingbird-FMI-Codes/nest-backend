@@ -8,13 +8,24 @@ import { Cluster } from './types/cluster.type'
 import { TimeSeriesPoint } from './types/time-series-point.type'
 import { TimeCluster } from './types/time-cluster.type'
 import { TimeClusterAnomaly } from './types/time-cluster-anomaly.type'
+import { AnimalDataService } from 'src/animal-data/animal-data.service'
 
 @Injectable()
 export class AnomalyOverTimeService {
+    async findAnomalyOverTime(startDate: Date, endDate: Date) {
+        const data = await this.animalDataService.findRange(startDate, endDate)
+
+        return this.analyzeAntDataOverTime(data, 60000)
+    }
+
+    constructor(private readonly animalDataService: AnimalDataService) {}
     /**
      * Groups ant records by spatial proximity (within 50 meters) into clusters.
      */
-    private groupByLocation(data: AntRecord[]): Cluster[] {
+    private groupByLocation(
+        data: AntRecord[],
+        distanceThresholdKm = 50
+    ): Cluster[] {
         const clusters: Cluster[] = []
         for (const record of data) {
             let added = false
@@ -23,7 +34,7 @@ export class AnomalyOverTimeService {
                     toGeoLocation(record.lat, record.lng),
                     toGeoLocation(cluster.centroid.lat, cluster.centroid.lng)
                 )
-                if (distance <= 50) {
+                if (distance <= distanceThresholdKm) {
                     cluster.records.push(record)
                     const n = cluster.records.length
                     // Update centroid as the average of coordinates in the cluster.

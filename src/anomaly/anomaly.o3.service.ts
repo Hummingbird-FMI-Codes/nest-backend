@@ -5,9 +5,12 @@ import { haversineDistance } from 'src/utils/haversineDistance'
 import { toGeoLocation } from 'src/utils/location'
 import { ExtendedCluster } from './types/cluster.extended.type'
 import { AntRecord } from './types/ant-record.type'
+import { AnimalDataService } from 'src/animal-data/animal-data.service'
 
 @Injectable()
 export class AnomalyO3Service {
+    constructor(private readonly animalDataService: AnimalDataService) {}
+
     analyzeAntData(
         data: AntRecord[],
         referenceData?: AntRecord[]
@@ -86,5 +89,10 @@ export class AnomalyO3Service {
         })
 
         return { clusters, anomalies }
+    }
+
+    async findAnomalyClustered(startDate: Date, endDate: any) {
+        const data = await this.animalDataService.findRange(startDate, endDate)
+        return this.analyzeAntData(data)
     }
 }

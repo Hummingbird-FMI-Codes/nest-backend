@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Controller, Get, Query } from '@nestjs/common'
 import { AnimalData } from '@prisma/client'
 import { AnomalyService } from './anomaly.service'
 import { AnomalyO3Service } from './anomaly.o3.service'
@@ -159,6 +159,25 @@ export class AnomalyController {
         ]
 
         return this.anomalyO3Service.analyzeAntData(sampleAntData)
+    }
+
+    @Get('clustered')
+    findAnomaly(
+        @Query('startDate') startDate: Date,
+        @Query('endDate') endDate
+    ) {
+        return this.anomalyO3Service.findAnomalyClustered(startDate, endDate)
+    }
+
+    @Get('overtime')
+    findAnomalyOverTime(
+        @Query('startDate') startDate: Date,
+        @Query('endDate') endDate: Date
+    ) {
+        return this.anomalyOverTimeService.findAnomalyOverTime(
+            startDate,
+            endDate
+        )
     }
 
     @Get('testovertime')
