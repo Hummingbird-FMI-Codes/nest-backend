@@ -161,25 +161,6 @@ export class AnomalyController {
         return this.anomalyO3Service.analyzeAntData(sampleAntData)
     }
 
-    @Get('clustered')
-    findAnomaly(
-        @Query('startDate') startDate: Date,
-        @Query('endDate') endDate
-    ) {
-        return this.anomalyO3Service.findAnomalyClustered(startDate, endDate)
-    }
-
-    @Get('overtime')
-    findAnomalyOverTime(
-        @Query('startDate') startDate: Date,
-        @Query('endDate') endDate: Date
-    ) {
-        return this.anomalyOverTimeService.findAnomalyOverTime(
-            startDate,
-            endDate
-        )
-    }
-
     @Get('testovertime')
     testOverTime() {
         const sampleData: AntRecord[] = [
@@ -310,6 +291,25 @@ export class AnomalyController {
             sampleData,
             3600000, // 1 hour
             1.5
+        )
+    }
+
+    @Get('clustered')
+    findAnomaly(
+        @Query('startDate') startDate: Date,
+        @Query('endDate') endDate
+    ) {
+        return this.anomalyO3Service.findAnomalyClustered(startDate, endDate)
+    }
+
+    @Get('overtime')
+    findAnomalyOverTime(
+        @Query('startDate') startDate: Date,
+        @Query('endDate') endDate: Date
+    ) {
+        return this.anomalyOverTimeService.findAnomalyOverTime(
+            startDate,
+            endDate
         )
     }
 }

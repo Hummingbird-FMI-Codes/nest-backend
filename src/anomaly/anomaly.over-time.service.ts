@@ -15,7 +15,7 @@ export class AnomalyOverTimeService {
     async findAnomalyOverTime(startDate: Date, endDate: Date) {
         const data = await this.animalDataService.findRange(startDate, endDate)
 
-        return this.analyzeAntDataOverTime(data, 60000)
+        return this.analyzeAntDataOverTime(data, 3600000, 1.5)
     }
 
     constructor(private readonly animalDataService: AnimalDataService) {}
